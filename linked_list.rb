@@ -43,35 +43,61 @@ class LinkedList
   def tail
     # returns the last node in the list
     node = head
-    until node.next_node.nil?
-      node = node.next_node
-    end
+    node = node.next_node until node.next_node.nil?
     node
   end
 
   def at(index)
     # returns the node at the given index
-    nil
+    node = head
+    index.times { node = node.next_node }
+    node
   end
 
   def pop
     # removes the last element from the list
-    nil
+    if size == 1
+      @head_node = nil
+    else
+      node = at(size - 2)
+      node.next_node('delete')
+    end
   end
 
   def contains?(value)
     # returns true if the passed in value is in the list, otherwise returns false
-    nil
+    node = head
+    until node.next_node.nil?
+      return true if node.value == value
+      node = node.next_node
+    end
+    false
   end
 
   def find(data)
     # returns the index of the node containing data, or nil if not found
+    counter = 0
+    node = head
+    until node.next_node.nil?
+      return counter if node.value == data
+      node = node.next_node
+      counter += 1
+    end
+    nil
   end
 
   def to_s
     # represent your LinkedList objects as strings so you can print them out and
     # preview them in the console. The format should be:
     # ( data ) -> ( data ) -> ( data ) -> nil
+    node = head
+    string = "( #{node.value} )"
+    until node.next_node.nil?
+      node = node.next_node
+      string += " -> ( #{node.value} )"
+    end
+    string += ' -> nil'
+    string
   end
 
   def insert_at(index)
@@ -87,13 +113,14 @@ class LinkedList
 end
 
 class Node
-  def value(data = 0)
+  def value(data = nil)
     @node_value = data unless data.nil?
     @node_value
   end
 
   def next_node(new_next_node = nil)
     @next_node = new_next_node unless new_next_node.nil?
+    @next_node = nil if new_next_node == "delete"
     @next_node
   end
 end
