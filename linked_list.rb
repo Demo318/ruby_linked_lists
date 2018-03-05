@@ -66,20 +66,17 @@ class LinkedList
 
   def contains?(value)
     # returns true if the passed in value is in the list, otherwise returns false
-    node = head
-    until node.next_node.nil?
-      return true if node.value == value
-      node = node.next_node
-    end
-    false
+    return false if find(value).nil?
+    true
   end
 
   def find(data)
     # returns the index of the node containing data, or nil if not found
     counter = 0
     node = head
-    until node.next_node.nil?
+    loop do
       return counter if node.value == data
+      break if node.next_node.nil?
       node = node.next_node
       counter += 1
     end
