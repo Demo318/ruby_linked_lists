@@ -3,14 +3,22 @@
 
 # Contains list of node objects.
 class LinkedList
+  def initialize(value = 0)
+    @head_node = Node.new
+    @head_node.value(value)
+  end
+
   def append
     # adds a new node to the end of the list
     nil
   end
 
-  def prepend
+  def prepend(new_value = nil)
     # adds a new node to the start of the list
-    nil
+    previous_head_node = head
+    head(Node.new)
+    head.value(new_value)
+    head.next_node(previous_head_node)
   end
 
   def size
@@ -18,14 +26,19 @@ class LinkedList
     nil
   end
 
-  def head
-    # returns the total number of nodes in the list
-    nil
+  def head(head_node = nil)
+    # returns the first node in the list
+    @head_node = head_node unless head_node.nil?
+    @head_node
   end
 
   def tail
     # returns the last node in the list
-    nil
+    node = head
+    until node.next_node.nil?
+      node = node.next_node
+    end
+    node
   end
 
   def at(index)
@@ -66,15 +79,17 @@ class LinkedList
 end
 
 class Node
-
-  def value(data = nil)
+  def value(data = 0)
     @node_value = data unless data.nil?
     @node_value
   end
 
-  def next_node(address = nil)
-    @next_node_address = address unless address.nil?
-    @next_node_address
+  def next_node(new_next_node = nil)
+    @next_node = new_next_node unless new_next_node.nil?
+    @next_node
   end
-
 end
+
+
+
+
