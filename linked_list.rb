@@ -8,9 +8,11 @@ class LinkedList
     @head_node.value(value)
   end
 
-  def append
+  def append(new_value = nil)
     # adds a new node to the end of the list
-    nil
+    previous_tail_node = tail
+    new_tail = previous_tail_node.next_node(Node.new)
+    new_tail.value(new_value)
   end
 
   def prepend(new_value = nil)
@@ -23,7 +25,13 @@ class LinkedList
 
   def size
     # returns the total number of nodes in the list
-    nil
+    counter = 1
+    node = head
+    until node.next_node.nil?
+      counter += 1
+      node = node.next_node
+    end
+    counter
   end
 
   def head(head_node = nil)
